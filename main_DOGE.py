@@ -102,7 +102,7 @@ while True:
         else:
             messages = client.get_messages(tegmo)
             url_rec = messages[0].reply_markup.rows[0].buttons[0].url
-            f = open("url_dir/urls5.txt")
+            f = open("urls5.txt")
             fd = f.read()
             if fd == url_rec:
                 print("Найдено повторение переменной")
@@ -123,7 +123,7 @@ while True:
                 params = {
                     'apikey': configs["VirusTotal_apiKey"], 'url': url_rec}
                 response = requests.post(url, data=params)
-                my_file = open('url_dir/urls5.txt')
+                my_file = open('urls5.txt', "a")
                 my_file.write(url_rec)
                 print("Новая запись в файле сделана")
                 time.sleep(16)
