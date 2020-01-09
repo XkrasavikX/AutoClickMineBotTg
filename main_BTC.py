@@ -15,15 +15,12 @@ import urllib.request
 import os
 
 n = 0
+with open("configs/data.json", "r") as read_file:
+    configs = json.load(read_file)
 
-api_id = 1085894
-api_hash = '232b522f4fb6843d0a0245dff1b0d993'
+api_id, api_hash = configs["id"], configs["hash"]
+proxy_ip, proxy_port, secret = configs["proxy"]["ip"], configs["proxy"]["port"], configs["proxy"]["secret"]
 
-proxy_ip = 'russia.proxy.digitalresistance.dog'
-proxy_port = 443
-secret = 'ddd41d8cd98f00b204e9800998ecf8427e'
-# client = TelegramClient('anon1', api_id, api_hash)
-# client.connect()
 client = TelegramClient(
     'anon',
     api_id,
@@ -104,7 +101,7 @@ while True:
         else:
             messages = client.get_messages(tegmo)
             url_rec = messages[0].reply_markup.rows[0].buttons[0].url
-            f = open("url_dir/urls5.txt")
+            f = open("url_dir/urls3.txt")
             fd = f.read()
             if fd == url_rec:
                 print("Найдено повторение переменной")
@@ -123,9 +120,9 @@ while True:
             else:
                 url = 'https://www.virustotal.com/vtapi/v2/url/scan'
                 params = {
-                    'apikey': '5e690fc1a04f6c08c6d008ba39606cf30244df0b0621597c6ef67548fc9c85a1', 'url': url_rec}
+                    'apikey': configs["VirusTotal_apiKey"], 'url': url_rec}
                 response = requests.post(url, data=params)
-                my_file = open('url_dir/urls5.txt')
+                my_file = open('url_dir/urls3.txt')
                 my_file.write(url_rec)
                 print("Новая запись в файле сделана")
                 time.sleep(16)
